@@ -29,3 +29,7 @@ pub extern "C" fn _start() -> ! {
 
     loop {}
 }
+fn main() {
+    let x = 10;
+    x = 5;
+}

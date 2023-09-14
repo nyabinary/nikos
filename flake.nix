@@ -1,7 +1,11 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    flake-utils.url = "github:numtide/flake-utils";
+    nixpkgs = {
+      url = "github:NixOS/nixpkgs/nixos-unstable";
+    };
+    flake-utils = {
+      url = "github:numtide/flake-utils";
+    };
     fenix = {
       url = "github:nix-community/fenix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -22,7 +26,17 @@
         buildInputs = with pkgs; [
           qemu
           cargo-bootimage
-          fenix.packages.${system}.complete.toolchain
+          lldb
+          (fenix.packages.${system}.complete.withComponents [
+            "rustc"
+            "cargo"
+            "rustfmt"
+            "rust-analyzer"
+            "clippy"
+            "miri"
+            "rust-src"
+            "llvm-tools"
+          ])
         ];
       };
     });
